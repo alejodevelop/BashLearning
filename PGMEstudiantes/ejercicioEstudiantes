@@ -1,0 +1,56 @@
+#!/bin/bash 
+
+#chmod +x ./ejercicioEstudiantes
+#El anterior comando otorga permisos de ejecucion al script
+
+echo 
+echo -e lista estudiantes DANE: "\n"
+
+primeraLinea=1
+ 
+while read line; do
+
+if [ $primeraLinea -eq 1 ]
+then 
+primeraLinea=2
+echo la cantidad de registros de estudiantes es $line 
+else
+
+echo 
+echo Estudiante No $line 
+
+if [ $line -ge 100 ]
+then
+edad=$(($line%100))
+genero=$(($line/100))
+else
+#se quita el zero a la izquierda
+edadSinCero=$(echo $line | sed 's/^0*//')
+edad=$edadSinCero
+genero=0
+fi
+
+
+
+if [ $genero -eq 0 ]
+then 
+echo genero: Femenino
+else
+echo genero: Masculino
+fi
+
+
+if [ $edad -ge 18 ]
+then 
+echo edad: $edad , el estudiante puede votar
+else
+echo edad: $edad , el estudiante no puede votar
+fi
+
+fi
+
+echo -------------------------------------------------
+
+
+done < listaEstudiantes.txt
+
